@@ -23,6 +23,10 @@ lib-cov
 coverage
 *.lcov
 
+
+# Firebase service account key
+serviceAccountKey.json
+
 # nyc test coverage
 .nyc_output
 
