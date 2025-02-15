@@ -7,12 +7,10 @@ interface AuthRequest extends Request {
 
 export const authMiddleware = async (req: AuthRequest, res: Response, next: NextFunction): Promise<void> => {
   const token = req.headers.authorization?.split("Bearer ")[1];
-
   if (!token) {
     res.status(401).json({ error: "Unauthorized: No token provided" });
     return;
   }
-
   try {
     const decodedToken = await admin.auth().verifyIdToken(token);
     req.user = decodedToken;

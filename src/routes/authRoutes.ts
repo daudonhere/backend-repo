@@ -1,15 +1,9 @@
-import { Request, Response, Router } from "express";
-import { admin } from "@/config/firebaseConfig";
-import { authMiddleware } from "@/middlewares/authMiddleware";
-
-interface AuthRequest extends Request {
-  user?: admin.auth.DecodedIdToken;
-}
+import { Router } from "express";
+import { login } from "@/controllers/authController";
 
 const router = Router();
 
-router.post("/verify-token", authMiddleware, (req: AuthRequest, res: Response) => {
-  res.json({ success: true, user: req.user });
-});
+router.post("/login", login);
 
 export default router;
+

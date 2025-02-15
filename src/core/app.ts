@@ -12,7 +12,7 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(loggerMiddleware);
 app.use("/services", userRoutes);
-app.use("/services/auth", authRoutes);
+app.use("/services", authRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
