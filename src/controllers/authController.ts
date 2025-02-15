@@ -1,11 +1,8 @@
-import { Request, Response } from "express";
+import { Response } from "express";
 import { admin } from "@/config/firebaseConfig";
+import { AuthEntities } from "@/entities/authEntities"
 
-interface AuthRequest extends Request {
-  user?: admin.auth.DecodedIdToken;
-}
-
-export const login = async (req: AuthRequest, res: Response): Promise<void> => {
+export const login = async (req: AuthEntities, res: Response): Promise<void> => {
   try {
     const token = req.headers.authorization?.split("Bearer ")[1];
     if (!token) {

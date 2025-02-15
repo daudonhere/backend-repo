@@ -9,6 +9,11 @@ export class UserRepository {
     return userDoc.exists ? { id: userDoc.id, ...userDoc.data() } as unknown as UserEntities : null;
   }
 
+  async getAllUsers(): Promise<UserEntities[]> {
+    const snapshot = await db.collection(USERS_COLLECTION).get();
+    return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as unknown as UserEntities));
+  }
+
   async updateUser(userId: string, userData: Partial<UserEntities>): Promise<UserEntities> {
     await db.collection(USERS_COLLECTION).doc(userId).update(userData);
     const updatedDoc = await db.collection(USERS_COLLECTION).doc(userId).get();

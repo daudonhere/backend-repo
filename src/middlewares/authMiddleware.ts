@@ -1,11 +1,8 @@
-import { Request, Response, NextFunction } from "express";
+import { Response, NextFunction } from "express";
 import { admin } from "@/config/firebaseConfig";
+import { AuthEntities } from "@/entities/authEntities";
 
-interface AuthRequest extends Request {
-  user?: admin.auth.DecodedIdToken;
-}
-
-export const authMiddleware = async (req: AuthRequest, res: Response, next: NextFunction): Promise<void> => {
+export const authMiddleware = async (req: AuthEntities, res: Response, next: NextFunction): Promise<void> => {
   const token = req.headers.authorization?.split("Bearer ")[1];
   if (!token) {
     res.status(401).json({ error: "Unauthorized: No token provided" });
