@@ -1,13 +1,11 @@
 import admin from "firebase-admin";
-import dotenv from "dotenv";
+import { getFirebaseCredentials } from "@/utils/env";
 
-dotenv.config();
-
-const serviceAccount = JSON.parse(process.env.FIREBASE_CREDENTIALS || "{}");
+const serviceAccount = getFirebaseCredentials();
 
 admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount as admin.ServiceAccount),
+  credential: admin.credential.cert(serviceAccount),
 });
 
-const db = admin.firestore();
-export { admin, db };
+export const db = admin.firestore();
+export const auth = admin.auth();
