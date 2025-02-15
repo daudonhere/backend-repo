@@ -1,7 +1,11 @@
 import { Request, Response, NextFunction } from "express";
 import { admin } from "@/config/firebaseConfig";
 
-export const authMiddleware = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+interface AuthRequest extends Request {
+  user?: admin.auth.DecodedIdToken;
+}
+
+export const authMiddleware = async (req: AuthRequest, res: Response, next: NextFunction): Promise<void> => {
   const token = req.headers.authorization?.split("Bearer ")[1];
 
   if (!token) {
@@ -11,7 +15,7 @@ export const authMiddleware = async (req: Request, res: Response, next: NextFunc
 
   try {
     const decodedToken = await admin.auth().verifyIdToken(token);
-    (req as Request & { user: admin.auth.DecodedIdToken }).user = decodedToken;
+    req.user = decodedToken;
     next();
   } catch (error) {
     console.error("Invalid token:", error);
