@@ -14,6 +14,12 @@ export class UserRepository {
     return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as unknown as UserEntities));
   }
 
+  async createUser(userData: UserEntities): Promise<UserEntities> {
+    const newUserRef = db.collection(USERS_COLLECTION).doc();
+    await newUserRef.set(userData);
+    return { id: newUserRef.id, ...userData };
+  }
+
   async updateUser(userId: string, userData: Partial<UserEntities>): Promise<UserEntities> {
     await db.collection(USERS_COLLECTION).doc(userId).update(userData);
     const updatedDoc = await db.collection(USERS_COLLECTION).doc(userId).get();

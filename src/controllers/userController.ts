@@ -27,6 +27,22 @@ export async function fetchAllUsers(req: Request, res: Response): Promise<void> 
   }
 }
 
+export async function createUser(req: Request, res: Response): Promise<void> {
+  try {
+    const { name, email, age } = req.body;
+
+    if (!name || !email) {
+      res.status(400).json({ error: "Name and email are required" });
+      return;
+    }
+
+    const newUser = await userRepo.createUser({ name, email, age });
+    res.status(201).json(newUser);
+  } catch (error) {
+    handleError(res, error, "Failed to create user");
+  }
+}
+
 export async function updateUserData(req: Request, res: Response): Promise<void> {
   try {
     const userId = req.params.id;

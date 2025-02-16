@@ -1,4 +1,4 @@
 import { login } from "./authController";
-import { fetchAllUsers, fetchUserData, updateUserData } from "./userController";
+import { createUser, fetchAllUsers, fetchUserData, updateUserData } from "./userController";
 
-export { login, fetchAllUsers, fetchUserData, updateUserData };
+export { login, createUser, fetchAllUsers, fetchUserData, updateUserData };
